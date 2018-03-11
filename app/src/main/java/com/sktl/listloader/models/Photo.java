@@ -1,10 +1,12 @@
 package com.sktl.listloader.models;
 
+
 /**
  * Created by USER-PC on 05.03.2018.
  */
 
 public class Photo {
+
 
     public String id;
     public String secret;
@@ -20,7 +22,7 @@ public class Photo {
 
 
     public Photo(String tId, String tOwner, String tSecret,
-          String tServer, String tFarm, String tTitle) {
+                 String tServer, String tFarm, String tTitle) {
         id = tId;
         owner = tOwner;
         secret = tSecret;

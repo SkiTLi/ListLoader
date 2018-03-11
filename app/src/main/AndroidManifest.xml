@@ -19,17 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-
-            <!--<intent-filter>-->
-                <!--<action android:imageView="android.intent.action.VIEW"/>-->
-                <!--<category android:imageView="android.intent.category.DEFAULT"/>-->
-                <!--<category android:imageView="android.intent.category.BROWSABLE"/>-->
-                <!--<data android:scheme="appforflickr" android:host="callback"/>-->
-            <!--</intent-filter>-->
-
-
-
-
         </activity>
 
 

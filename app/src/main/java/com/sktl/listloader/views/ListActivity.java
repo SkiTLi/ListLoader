@@ -1,5 +1,6 @@
 package com.sktl.listloader.views;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -21,8 +22,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnItemClick;
 
-public class ListActivity extends ActionBarActivity {
-//public class ListActivity extends Activity {
+//public class ListActivity extends ActionBarActivity {
+public class ListActivity extends Activity {
+
+
 
     @InjectView(R.id.listViewPosts)
     ListView mListViewPosts;
@@ -50,6 +53,7 @@ public class ListActivity extends ActionBarActivity {
 
 
 
+
     }
 
     @OnItemClick(R.id.listViewPosts)
@@ -58,6 +62,7 @@ public class ListActivity extends ActionBarActivity {
         int postId = p.id;
 
         Intent detailIntent = new Intent(this, DetailActivity.class);
+
         detailIntent.putExtra("postId", postId);
         startActivity(detailIntent);
     }
@@ -69,21 +74,21 @@ public class ListActivity extends ActionBarActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_list, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        int id = item.getItemId();
+//
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }

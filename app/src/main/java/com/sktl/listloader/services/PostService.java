@@ -10,7 +10,6 @@ import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 
 import retrofit.http.GET;
-import retrofit.http.POST;
 import retrofit.http.Path;
 import rx.Observable;
 
@@ -30,7 +29,7 @@ public class PostService {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("Accept", "application/json");
+                request.addHeader("SkTL", "app/json");
             }
         };
 
@@ -58,8 +57,5 @@ public class PostService {
         public Observable<Post>
         getPost(@Path("id") int postId);
 
-        @POST("/posts")
-        public Observable<Post>
-        postPost(Post post);
     }
 }

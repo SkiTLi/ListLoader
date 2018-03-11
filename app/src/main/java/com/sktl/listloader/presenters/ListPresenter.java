@@ -1,5 +1,7 @@
 package com.sktl.listloader.presenters;
 
+import android.util.Log;
+
 import com.sktl.listloader.models.Post;
 import com.sktl.listloader.services.PostService;
 import com.sktl.listloader.views.ListActivity;
@@ -19,13 +21,14 @@ import rx.schedulers.Schedulers;
 
 public class ListPresenter {
 
-    ListActivity mView;
-    PostService mForum;
+    ListActivity mListActivity;
+    PostService mPostService;
 
-    public ListPresenter(ListActivity view, PostService forum) {
+    public ListPresenter(ListActivity view, PostService postService) {
 
-        mView = view;
-        mForum = forum;
+        mListActivity = view;
+
+        this.mPostService = postService;
     }
 
 
@@ -44,8 +47,9 @@ public class ListPresenter {
 //        }
 //    }
 
+
     public void loadPosts() {
-        mForum.getApi()
+        mPostService.getApi()
                 .getPosts()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -62,8 +66,12 @@ public class ListPresenter {
 
                     @Override
                     public void onNext(List<Post> posts) {
+                        Log.d("sss", "class ListPresenter, method loadPosts() .. " +
+                                "onNext(List<Post> posts) .. " +
+                                "posts.size()= " + posts.size());
+                        mListActivity.displayPosts(posts);
 
-                        mView.displayPosts(posts);
+
                     }
                 });
 

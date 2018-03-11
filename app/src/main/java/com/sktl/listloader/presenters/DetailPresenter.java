@@ -2,18 +2,11 @@ package com.sktl.listloader.presenters;
 
 import android.util.Log;
 
-import com.sktl.listloader.models.Photo;
 import com.sktl.listloader.models.Post;
+import com.sktl.listloader.models.Smth;
 import com.sktl.listloader.services.PhotoService;
 import com.sktl.listloader.services.PostService;
 import com.sktl.listloader.views.DetailActivity;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,28 +19,28 @@ import rx.schedulers.Schedulers;
 
 public class DetailPresenter {
 
-    DetailActivity mView;
-    PostService mPost;
-    PhotoService mPhoto;
-    List<Photo> list;
+    DetailActivity mDetailActivity;
+    PostService mPostService;
+    PhotoService mPhotoService;
 
     public DetailPresenter(DetailActivity activity, PostService post, PhotoService photo) {
 
-        mView = activity;
-        mPost = post;
-        mPhoto = photo;
+        mDetailActivity = activity;
+        mPostService = post;
+        mPhotoService = photo;
     }
 
     public void loadPost() {
         //загрузка статьи по id
-        mPost.getApi()
-                .getPost(mView.getPostId())
+        mPostService.getApi()
+                .getPost(mDetailActivity.getPostId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Post>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.d("sss", "class DetailPresenter, method loadPost() .." +
+                                " onCompleted()");
                     }
 
                     @Override
@@ -57,87 +50,46 @@ public class DetailPresenter {
 
                     @Override
                     public void onNext(Post post) {
-
-                        mView.displayPost(post);
+                        Log.d("sss", "class DetailPresenter, method loadPost() .." +
+                                " onNext(Post post) .." +
+                                " post.id= " + post.id);
+                        mDetailActivity.displayPost(post);
                     }
                 });
-    }
-
-    private Photo parseJSON(String json) {
-
-
-        String flickrId;
-        String flickrOwner;
-        String flickrSecret;
-        String flickrServer;
-        String flickrFarm;
-        String flickrTitle = "fromParseJSON";
-
-        Photo photo = null;
-
-        try {
-            JSONObject JsonObject = new JSONObject(json);
-            JSONObject Json_photos = JsonObject.getJSONObject("photos");
-            JSONArray JsonArray_photo = Json_photos.getJSONArray("photo");
-
-            //We have only one photo in this exercise
-            JSONObject FlickrPhoto = JsonArray_photo.getJSONObject(0);
-
-            flickrId = FlickrPhoto.getString("id");
-            Log.d("sss", "  flickrId=" + flickrId);
-            flickrOwner = FlickrPhoto.getString("owner");
-            flickrSecret = FlickrPhoto.getString("secret");
-            flickrServer = FlickrPhoto.getString("server");
-            flickrFarm = FlickrPhoto.getString("farm");
-            flickrTitle = FlickrPhoto.getString("title");
-
-            photo = new Photo(flickrId, flickrOwner, flickrSecret,
-                    flickrServer, flickrFarm, flickrTitle);
-
-        } catch (JSONException e) {
-
-            e.printStackTrace();
-
-        }
-
-        return photo;
     }
 
 
     public void loadPhotos() {
 
-        mPhoto.getApi()
+        mPhotoService.getApi()
+
                 .getPhotos()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<List<Photo>>() {
-                .subscribe(new Observer<Photo>() {
+
+                .subscribe(new Observer<Smth>() {
                     @Override
                     public void onCompleted() {
 
+
+                        Log.d("sss", "class DetailPresenter, method loadPhotos() .." +
+                                " onCompleted()");
                     }
 
                     @Override
                     public void onError(Throwable e) {
 
+
+                        Log.d("sss", "class DetailPresenter, method onError(Throwable e) .. e=" + e);
+
                     }
 
                     @Override
-//                    public void onNext(List<Photo> comments) {
-                    public void onNext(Photo comments) {
-//                        mView.displayPhotos(comments);
-                        mView.displayPhoto(comments);
-
-
-//                        list = comments;
-//                        mView.displayPhoto(parseJSON(comments.toString()));
-//                        mView.displayPhoto(comments.get(55));
-
-//                        for (Photo photo : list) {
-//                            mView.displayPhoto(list.get(0));
-//                        }
-
-
+                    public void onNext(Smth smth) {
+                        Log.d("sss", "class DetailPresenter, method loadPhotos() .." +
+                                " onNext(Photos photos) .." +
+                                " smth.photos.total= " + smth.photos.total);
+                        mDetailActivity.displayPhotos(smth.photos.photo);
                     }
                 });
     }
