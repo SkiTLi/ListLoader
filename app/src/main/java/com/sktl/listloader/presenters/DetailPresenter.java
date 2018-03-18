@@ -23,11 +23,12 @@ public class DetailPresenter {
     PostService mPostService;
     PhotoService mPhotoService;
 
-    public DetailPresenter(DetailActivity activity, PostService post, PhotoService photo) {
+//    public DetailPresenter(DetailActivity activity, PostService post, PhotoService photo) {
+    public DetailPresenter(DetailActivity activity, PostService post) {
 
         mDetailActivity = activity;
         mPostService = post;
-        mPhotoService = photo;
+//        mPhotoService = photo;
     }
 
     public void loadPost() {
@@ -45,7 +46,9 @@ public class DetailPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.d("sss", "class DetailPresenter, method loadPost() .." +
+                                " onError(Throwable e) .." +
+                                " e=" + e);
                     }
 
                     @Override
@@ -53,44 +56,49 @@ public class DetailPresenter {
                         Log.d("sss", "class DetailPresenter, method loadPost() .." +
                                 " onNext(Post post) .." +
                                 " post.id= " + post.id);
-                        mDetailActivity.displayPost(post);
+//                        mDetailActivity.displayPost(post);
+                        Log.d("sss", "class DetailPresenter, method loadPost() .." +
+                                " onNext(Post post) .." +
+                                " post.urlPhoto= " + post.urlPhoto);
                     }
                 });
     }
 
 
-    public void loadPhotos() {
-
-        mPhotoService.getApi()
-
-                .getPhotos()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-
-                .subscribe(new Observer<Smth>() {
-                    @Override
-                    public void onCompleted() {
-
-
-                        Log.d("sss", "class DetailPresenter, method loadPhotos() .." +
-                                " onCompleted()");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-
-                        Log.d("sss", "class DetailPresenter, method onError(Throwable e) .. e=" + e);
-
-                    }
-
-                    @Override
-                    public void onNext(Smth smth) {
-                        Log.d("sss", "class DetailPresenter, method loadPhotos() .." +
-                                " onNext(Photos photos) .." +
-                                " smth.photos.total= " + smth.photos.total);
-                        mDetailActivity.displayPhotos(smth.photos.photo);
-                    }
-                });
-    }
+//    public void loadPhotos() {
+//
+//        mPhotoService.getApi()
+//
+//                .getPhotos()
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//
+//                .subscribe(new Observer<Smth>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//
+//                        Log.d("sss", "class DetailPresenter, method loadPhotos() .." +
+//                                " onCompleted()");
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//
+//                        Log.d("sss", "class DetailPresenter, method loadPhotos() .." +
+//                                " onError(Throwable e) .." +
+//                                " e=" + e);
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Smth smth) {
+//                        Log.d("sss", "class DetailPresenter, method loadPhotos() .." +
+//                                " onNext(Photos photos) .." +
+//                                " smth.photos.total= " + smth.photos.total);
+//                        mDetailActivity.displayPhotos(smth.photos.photo);
+//                    }
+//                });
+//    }
 }

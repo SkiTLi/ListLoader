@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.sktl.listloader.R;
 import com.sktl.listloader.models.Photo;
 import com.sktl.listloader.models.Post;
+import com.sktl.listloader.models.PostWithPhoto;
 import com.sktl.listloader.presenters.DetailPresenter;
 import com.sktl.listloader.services.PhotoService;
 import com.sktl.listloader.services.PostService;
@@ -43,10 +44,12 @@ public class DetailActivity extends Activity {
 
     DetailPresenter mDetailPresenter;
     PostService mPostService;
-    PhotoService mPhotoService;
+//    PhotoService mPhotoService;
 
     protected int mPostId;
-    protected int mPhotoId;
+    protected String mPhotoUrl;
+    protected String mPostTitle;
+    protected String mPostBody;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +59,32 @@ public class DetailActivity extends Activity {
         ButterKnife.inject(this);
 
         mPostId = getIntent().getIntExtra("postId", 0);
-
+        mPhotoUrl = getIntent().getStringExtra("postUrl");
+        mPostTitle = getIntent().getStringExtra("postTitle");
+        mPostBody = getIntent().getStringExtra("postBody");
 
         mPostService = new PostService();
 
-        mPhotoService = new PhotoService();
+//        mPhotoService = new PhotoService();
 
-        mDetailPresenter = new DetailPresenter(this, mPostService, mPhotoService);
+        mDetailPresenter = new DetailPresenter(this, mPostService);
 
-        mDetailPresenter.loadPost();
-        mDetailPresenter.loadPhotos();
+        Log.d("sss", "class DetailActivity, method onCreate(Bundle savedInstanceState) .. " +
+                "before mDetailPresenter.loadPost();");
+
+        displayPost();
+//        mDetailPresenter.loadPost();
+
+
+
+        Log.d("sss", "class DetailActivity, method onCreate(Bundle savedInstanceState) .. " +
+                "before mDetailPresenter.loadPhotos(); but after mDetailPresenter.loadPost();");
+//        mDetailPresenter.loadPhotos();
+        Log.d("sss", "class DetailActivity, method onCreate(Bundle savedInstanceState) .. " +
+                "after mDetailPresenter.loadPhotos();");
+
+
+
 
 
     }
@@ -75,33 +94,25 @@ public class DetailActivity extends Activity {
         return mPostId;
     }
 
-    public void displayPhotos(List<Photo> photos) {
 
 
-        Log.d("sss", "class DetailActivity, method displayPhotos(List<Photo> photos) .." +
-                " photos.size()= " + photos.size());
 
-//        Uri myUri = Uri.parse("https://farm5.staticflickr.com/4783/40003740144_a1ca19fdb3_q.jpg");
-        Photo photo = photos.get(getPostId());
+//    public void displayPost(Post post) {
+    public void displayPost() {
 
-        Uri myUri = Uri.parse("https://farm"
-                + photo.farm + ".staticflickr.com/"
-                + photo.server + "/"
-                + photo.id + "_"
-//                + photo.secret + "_q.jpg");
-                + photo.secret + ".jpg");
+//        mTextViewTitle.setText(post.title);
+        mTextViewTitle.setText(mPostTitle);
+//        mTextViewBody.setText(post.body);
+        mTextViewBody.setText(mPostBody);
+        Log.d("sss", "class DetailActivity, method displayPost(Post post) .. " +
+                "mPostBody = " + mPostBody);
+
+        Picasso.with(this).load(mPhotoUrl).into(mImageViewPhotos);
+
+        Log.d("sss", "class DetailActivity, method displayPost(Post post) .. " +
+                "mPhotoUrl = " + mPhotoUrl);
 
 
-        Picasso.with(this).load(myUri).into(mImageViewPhotos);
-
-        Log.d("sss", "class DetailActivity, method displayPhotos(List<Photo> photos) .." +
-                " myUri.toString()= " + myUri.toString());
-    }
-
-    public void displayPost(Post post) {
-
-        mTextViewTitle.setText(post.title);
-        mTextViewBody.setText(post.body);
     }
 
 

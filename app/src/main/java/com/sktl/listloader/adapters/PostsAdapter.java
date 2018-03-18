@@ -12,6 +12,7 @@ import com.sktl.listloader.R;
 import com.sktl.listloader.models.Post;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by USER-PC on 05.03.2018.
@@ -48,6 +49,10 @@ public class PostsAdapter extends ArrayAdapter<Post> {
 
         TextView title = (TextView) convertView.findViewById(R.id.textViewItemTitle);
         title.setText(position + 1 + ". " + post.title);
+
+                Log.d("sss", "class PostsAdapter," +
+                " method getView(int position, View convertView, ViewGroup parent) .." +
+                " post.title= " + post.title);
 
         return convertView;
     }
