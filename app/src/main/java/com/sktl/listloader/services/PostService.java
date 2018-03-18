@@ -53,9 +53,5 @@ public class PostService {
         public Observable<List<Post>>
         getPosts();
 
-        @GET("/posts/{id}")
-        public Observable<Post>
-        getPost(@Path("id") int postId);
-
     }
 }

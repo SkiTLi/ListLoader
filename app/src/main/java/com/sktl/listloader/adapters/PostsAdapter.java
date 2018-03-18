@@ -21,8 +21,6 @@ import java.util.List;
 public class PostsAdapter extends ArrayAdapter<Post> {
 
     public PostsAdapter(Context ctx, ArrayList<Post> posts) {
-
-
 //        ArrayAdapter(Context context, int resource, List<T> objects)
         super(ctx, 0, posts);
 
@@ -31,26 +29,20 @@ public class PostsAdapter extends ArrayAdapter<Post> {
     }
 
     @Override
-
     public View getView(int position, View convertView, ViewGroup parent) {
         Post post = getItem(position);
-
 //        Log.d("sss", "class PostsAdapter," +
 //                " method getView(int position, View convertView, ViewGroup parent) .." +
 //                " post= " + post);
-
-
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_post_item, parent, false);
-
 //        Log.d("sss", "class PostsAdapter," +
 //                " method getView(int position, View convertView, ViewGroup parent) .." +
 //                " convertView= " + convertView);
-
         TextView title = (TextView) convertView.findViewById(R.id.textViewItemTitle);
         title.setText(position + 1 + ". " + post.title);
 
-                Log.d("sss", "class PostsAdapter," +
+        Log.d("sss", "class PostsAdapter," +
                 " method getView(int position, View convertView, ViewGroup parent) .." +
                 " post.title= " + post.title);
 
