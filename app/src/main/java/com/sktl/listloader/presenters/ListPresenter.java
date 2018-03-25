@@ -1,5 +1,6 @@
 package com.sktl.listloader.presenters;
 
+
 import android.util.Log;
 
 import com.sktl.listloader.models.Photo;
@@ -55,6 +56,9 @@ public class ListPresenter {
         loadTextPosts();
         loadPhotos();
         mListActivity.displayPosts(mListPostWithPhoto);
+        Log.d("sss", "class ListPresenter, method loadPosts() .." +
+                " mListPostWithPhoto.get(6).getUrlPhoto()=" +
+                mListPostWithPhoto.get(6).getUrlPhoto());
     }
 
     public void loadTextPosts() {
@@ -65,24 +69,25 @@ public class ListPresenter {
                 .subscribe(new Observer<List<Post>>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("sss", "class ListPresenter, method loadPosts() .." +
+                        Log.d("sss", "class ListPresenter, method loadTextPosts() .." +
                                 " onCompleted()");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("sss", "class ListPresenter, method loadPosts() .." +
+                        Log.d("sss", "class ListPresenter, method loadTextPosts() .." +
                                 " onError(Throwable e) .." +
                                 " e=" + e);
                     }
 
                     @Override
                     public void onNext(List<Post> posts) {
-                        Log.d("sss", "class ListPresenter, method loadPosts() .. " +
+                        Log.d("sss", "class ListPresenter, method loadTextPosts() .. " +
                                 "onNext(List<Post> posts) .. " +
                                 "posts.size()= " + posts.size());
                         mListTextPost = posts;
                         mListActivity.displayPosts(mListTextPost);
+
                     }
 
                 });
@@ -119,6 +124,11 @@ public class ListPresenter {
                                 " smth.photos.photo.size() = " + smth.photos.photo.size());
                         mListPostWithPhoto = getMergePostsWithPhotos(mListTextPost,
                                 smth.photos.photo);
+
+                        Log.d("sss", "class ListPresenter, method loadPhotos() .." +
+                                " onNext(Smth smth) .." +
+                                " mListPostWithPhoto.get(55).getUrlPhoto() = " +
+                                mListPostWithPhoto.get(55).getUrlPhoto());
                     }
                 });
     }
@@ -133,12 +143,12 @@ public class ListPresenter {
 
         for (int i = 0; i < posts.size(); i++) {
             String myUrl = "https://farm"
-                    + photos.get(i).farm + ".staticflickr.com/"
-                    + photos.get(i).server + "/"
-                    + photos.get(i).id + "_"
-                    + photos.get(i).secret + ".jpg";
+                    + photos.get(i).getFarm() + ".staticflickr.com/"
+                    + photos.get(i).getServer() + "/"
+                    + photos.get(i).getId() + "_"
+                    + photos.get(i).getSecret() + ".jpg";
 
-            posts.get(i).urlPhoto = (myUrl);
+            posts.get(i).setUrlPhoto(myUrl);
 //            Log.d("sss", "class ListPresenter," +
 //                    " method getMergePostsWithPhotos(List<Post> posts, List<Photo> photos) .." +
 //                    " posts.get(i).urlPhoto= " + posts.get(i).urlPhoto);

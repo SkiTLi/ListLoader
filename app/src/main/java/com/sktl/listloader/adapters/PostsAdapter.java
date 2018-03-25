@@ -40,11 +40,12 @@ public class PostsAdapter extends ArrayAdapter<Post> {
 //                " method getView(int position, View convertView, ViewGroup parent) .." +
 //                " convertView= " + convertView);
         TextView title = (TextView) convertView.findViewById(R.id.textViewItemTitle);
-        title.setText(position + 1 + ". " + post.title);
+        title.setText(position + 1 + ". " + post.getTitle());
 
         Log.d("sss", "class PostsAdapter," +
                 " method getView(int position, View convertView, ViewGroup parent) .." +
-                " post.title= " + post.title);
+                " position= " + position +
+                ", post.title= " + post.getTitle());
 
         return convertView;
     }

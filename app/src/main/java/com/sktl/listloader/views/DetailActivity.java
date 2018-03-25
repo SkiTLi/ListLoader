@@ -16,7 +16,7 @@ import butterknife.InjectView;
  * Created by USER-PC on 05.03.2018.
  */
 
-//public class DetailActivity extends ActionBarActivity {
+
 public class DetailActivity extends Activity {
 
     @InjectView(R.id.textViewTitle)
@@ -38,7 +38,9 @@ public class DetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
         ButterKnife.inject(this);
+
         mPostId = getIntent().getIntExtra("postId", 0);
         mPhotoUrl = getIntent().getStringExtra("postUrl");
         mPostTitle = getIntent().getStringExtra("postTitle");
@@ -59,21 +61,5 @@ public class DetailActivity extends Activity {
                 "mPhotoUrl = " + mPhotoUrl);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_list, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        int id = item.getItemId();
-//
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+
 }
